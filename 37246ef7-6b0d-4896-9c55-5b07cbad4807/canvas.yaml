@@ -1,0 +1,144 @@
+id: 37246ef7-6b0d-4896-9c55-5b07cbad4807
+name: taxi heatmap
+project_id: 2c754acf-1f27-49fd-9eae-23703ffbadbf
+global_imports: []
+python_global_imports: ''
+r_global_imports: ''
+requirements: []
+linux_packages: []
+environment_variables: []
+is_public: false
+organization_id: 51d44731-6dc3-4725-8f4f-04d19e589a60
+layers:
+- blocks:
+  - auto_size: false
+    canvas_id: 37246ef7-6b0d-4896-9c55-5b07cbad4807
+    compute_settings: null
+    description: Searches for parquet and shapefile assets in the filesystem to verify
+      data availability
+    height: 1000
+    id: 1b10fde6-8a9c-4cfd-a2b9-bfad9af8526f
+    layer_id: 5f96a683-0296-4eda-a6c5-d23fc62b2d1c
+    name: check_files
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 0
+    y: 3000
+  - auto_size: false
+    canvas_id: 37246ef7-6b0d-4896-9c55-5b07cbad4807
+    compute_settings: null
+    description: Computes rolling window trip counts (1h/6h/24h) per zone, then aggregates
+      to daily zone demand features
+    height: 1000
+    id: 471de036-7d32-4b47-a7f2-1ce61a784ba6
+    layer_id: 5f96a683-0296-4eda-a6c5-d23fc62b2d1c
+    name: trip-level-rolling-features
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 2000
+    y: 2800
+  - auto_size: false
+    canvas_id: 37246ef7-6b0d-4896-9c55-5b07cbad4807
+    compute_settings: null
+    description: Renders animated GIF of NYC taxi pickup density by zone with daily
+      choropleth maps using color scale
+    height: 1000
+    id: 5a6d6216-bcc8-45de-ac7f-3f32675b7ebf
+    layer_id: 5f96a683-0296-4eda-a6c5-d23fc62b2d1c
+    name: build_animated_choropleth
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 2000
+    y: 0
+  - auto_size: false
+    canvas_id: 37246ef7-6b0d-4896-9c55-5b07cbad4807
+    compute_settings: null
+    description: Computes rolling pickup counts (1h, 6h, 24h) per taxi zone then aggregates
+      to daily statistics
+    height: 1000
+    id: 7de12af4-47ff-4ec7-abe0-106db7d76cf8
+    layer_id: 5f96a683-0296-4eda-a6c5-d23fc62b2d1c
+    name: compute_rolling_demand_features
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 2000
+    y: 1400
+  - auto_size: false
+    canvas_id: 37246ef7-6b0d-4896-9c55-5b07cbad4807
+    compute_settings: null
+    description: Trains LightGBM models per taxi zone with walk-forward validation;
+      visualizes 14-day forecasts vs actuals for top 10 busiest zones
+    height: 1000
+    id: 834375e5-864a-4f93-b595-1eb95f7814a7
+    layer_id: 5f96a683-0296-4eda-a6c5-d23fc62b2d1c
+    name: forecast_top10_zones
+    parent_id: null
+    properties: {}
+    status: 1
+    type: 1
+    variables: null
+    width: 1600
+    x: 4000
+    y: 1400
+  - auto_size: false
+    canvas_id: 37246ef7-6b0d-4896-9c55-5b07cbad4807
+    compute_settings: null
+    description: Loads 11 months of FHVHV trip data and aggregates daily ride counts
+      by taxi pickup zone
+    height: 1000
+    id: f0059ff0-ee32-4a61-9927-7ee632a4d04a
+    layer_id: 5f96a683-0296-4eda-a6c5-d23fc62b2d1c
+    name: load_and_aggregate
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 0
+    y: 0
+  canvas_id: 37246ef7-6b0d-4896-9c55-5b07cbad4807
+  edges:
+  - canvas_id: 37246ef7-6b0d-4896-9c55-5b07cbad4807
+    id: 0a0a91f3-56aa-4dad-bf4e-7010f9e75703
+    layer_id: 5f96a683-0296-4eda-a6c5-d23fc62b2d1c
+    source: f0059ff0-ee32-4a61-9927-7ee632a4d04a
+    target: 5a6d6216-bcc8-45de-ac7f-3f32675b7ebf
+  - canvas_id: 37246ef7-6b0d-4896-9c55-5b07cbad4807
+    id: 11f4aba1-9843-4bed-99de-1e470bc0319c
+    layer_id: 5f96a683-0296-4eda-a6c5-d23fc62b2d1c
+    source: f0059ff0-ee32-4a61-9927-7ee632a4d04a
+    target: 471de036-7d32-4b47-a7f2-1ce61a784ba6
+  - canvas_id: 37246ef7-6b0d-4896-9c55-5b07cbad4807
+    id: c2cb3489-cb5a-4a21-abf1-1d1c3f856e7b
+    layer_id: 5f96a683-0296-4eda-a6c5-d23fc62b2d1c
+    source: f0059ff0-ee32-4a61-9927-7ee632a4d04a
+    target: 7de12af4-47ff-4ec7-abe0-106db7d76cf8
+  - canvas_id: 37246ef7-6b0d-4896-9c55-5b07cbad4807
+    id: c95573a9-9616-4ecc-8846-8ea97556e1d1
+    layer_id: 5f96a683-0296-4eda-a6c5-d23fc62b2d1c
+    source: 7de12af4-47ff-4ec7-abe0-106db7d76cf8
+    target: 834375e5-864a-4f93-b595-1eb95f7814a7
+  id: 5f96a683-0296-4eda-a6c5-d23fc62b2d1c
+  name: Development
+  type: 1
+assets:
+- id: 8398d42e-9623-4198-80a6-6e6337303103
+  name: my_password
+  type: constant
